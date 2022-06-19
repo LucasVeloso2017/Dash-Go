@@ -1,17 +1,24 @@
-import { ChakraProvider, ColorModeProvider } from "@chakra-ui/react";
-import { AppProps } from "next/app";
+import { ChakraProvider } from "@chakra-ui/react";
+import { QueryClientProvider } from "react-query";
 import { SidebarDrawerProvider } from "../context/SidebarDrawerContext";
+import { makeServer } from "../services/mirage";
 import { theme } from "../styles/theme";
+import { ReactQueryDevtools } from "react-query/devtools";
+import { queryClient } from "../services/queryClient";
+if (process.env.NODE_ENV === "development") {
+  makeServer();
+}
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }) {
   return (
-    <ColorModeProvider options={theme}>
-      <ChakraProvider theme={theme}>
+    <ChakraProvider theme={theme}>
+      <QueryClientProvider client={queryClient}>
         <SidebarDrawerProvider>
           <Component {...pageProps} />
         </SidebarDrawerProvider>
-      </ChakraProvider>
-    </ColorModeProvider>
+        <ReactQueryDevtools />
+      </QueryClientProvider>
+    </ChakraProvider>
   );
 }
 

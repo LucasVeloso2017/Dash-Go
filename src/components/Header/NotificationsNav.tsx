@@ -1,4 +1,6 @@
+import { useColorMode } from "@chakra-ui/react";
 import { Icon, HStack } from "@chakra-ui/react";
+import { useEffect } from "react";
 import { RiNotificationLine, RiUserAddLine } from "react-icons/ri";
 
 export function NotificationNav() {
